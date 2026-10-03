@@ -45,6 +45,12 @@ Stop the app with `Ctrl+C` in the terminal.
 6. Download the farmer-readable Markdown report and the complete JSON trace.
 7. To show the rain/conflict case, change expected rain to `40 mm`, submit again, and show that the estimate changes and asks for an in-field recheck.
 
+## Pitch and PRD
+
+- [Product Requirements Document](docs/FIELDOPS_AI_PRD.docx): as-built scope, user flow, input contract, six specialist functions, actual demo formula, safety boundaries, acceptance criteria, and roadmap. It includes an Urdu executive summary.
+
+The updated 19-slide deck is generated locally at `docs/FIELDOPS_AI_Pitch_Deck_Final.pptx`. It retains images supplied in the original presentation; it is intentionally excluded from this public repository until redistribution rights for those images are confirmed. To rebuild from the original deck, install the project requirements and run `python scripts/build_pitch_and_prd.py --source-pptx "PATH_TO_ORIGINAL_DECK.pptx"`.
+
 ## Test with Excel and Pictures
 
 1. In the app, download **Excel field sheet**. It includes a yellow blank row, four ready-made cases, and a **Sample Photos** sheet with wheat, cotton, and rice pictures.
@@ -90,7 +96,7 @@ The app currently has **no login, rate limiting, or persistent database**. Do no
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-The tests cover irrigation arithmetic, rain offsets, structured specialist outputs, report exports, Excel template parsing, Urdu crop/stage values and numerals, and safety flags.
+The tests cover irrigation arithmetic, rain offsets, structured specialist outputs, report exports, Excel template parsing, Urdu crop/stage values and numerals, safety flags, PRD content, and pitch-deck rewriting on a synthetic fixture.
 
 ## What Is Included
 

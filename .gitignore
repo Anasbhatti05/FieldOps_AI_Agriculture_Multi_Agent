@@ -7,3 +7,5 @@ __pycache__/
 .streamlit/secrets.toml
 reports/*.md
 reports/*.json
+# The local revised deck retains third-party stock images from the supplied source.
+docs/FIELDOPS_AI_Pitch_Deck_Final.pptx
