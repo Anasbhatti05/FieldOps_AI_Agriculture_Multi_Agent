@@ -42,7 +42,8 @@ def test_prd_covers_as_built_scope_and_demo_formula():
     assert "token overlap" in content
     assert "does not claim a live weather feed" in content
     assert "not suitable for" in content.lower()
-    assert "14 passing tests" in content
+    assert "15 passing tests" in content
+    assert "approximately 546.3 m3" in content
 
 
 def test_pitch_rewriter_corrects_claims_in_a_synthetic_deck(tmp_path):
@@ -61,7 +62,7 @@ def test_pitch_rewriter_corrects_claims_in_a_synthetic_deck(tmp_path):
     content = _deck_text(output_path)
 
     assert len(presentation.slides) == 19
-    assert "about 32 m3" in content
+    assert "about 546 m3" in content
     assert "250 threshold" not in content
     assert "Execute Immediate Irrigation" not in content
     assert "Google Gemini" not in content

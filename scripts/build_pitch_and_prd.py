@@ -348,7 +348,7 @@ def build_prd(output_path: Path) -> None:
         ],
         widths=[1.45, 5.8],
     )
-    _add_text(document, "Example test case: 5 acres of wheat, 17% entered moisture, 0 mm forecast rain produces approximately 32 m3 in this demo formula. With 40 mm forecast rain the net estimate is zero and the app asks for a field recheck. These outputs are for software demonstration, not instructions to irrigate.", color="8A4E25")
+    _add_text(document, "Example test case: 5 acres of wheat (2.02343 ha), 17% entered moisture, and 0 mm forecast rain produces approximately 546.3 m3 in this demo formula (the UI rounds to 546 m3). With 40 mm forecast rain the net estimate is zero and the app asks for a field recheck. These outputs are for software demonstration, not instructions to irrigate.", color="8A4E25")
 
     _add_heading(document, "7. Safety, Privacy, and Deployment")
     _add_table(
@@ -377,7 +377,7 @@ def build_prd(output_path: Path) -> None:
             ("Rain offset scenario", "40 mm forecast offsets the demo deficit; flags a soil recheck instead of triggering irrigation."),
             ("Photo without vision", "Upload completes; no AI-provider call occurs when vision is disabled, even if a key exists."),
             ("Hosted secrets", "Mocked Streamlit secrets work when configured; missing secrets leave vision disabled."),
-            ("CI and runtime", "GitHub Actions tests Python 3.11 and 3.13; local environment has 14 passing tests, clean dependency check, and healthy Streamlit endpoint."),
+            ("CI and runtime", "GitHub Actions tests Python 3.11 and 3.13; local environment has 15 passing tests, clean dependency check, and healthy Streamlit endpoint."),
         ],
         widths=[1.55, 5.7],
         font_size=7.8,
@@ -507,7 +507,7 @@ DECK_REPLACEMENTS = {
     8: {
         "Turning Field Conditions Into an Irrigation Decision": "Dry Wheat Walkthrough: Demo, Not Prescription",
         "Field Inputs": "Controlled Test Inputs",
-        "Execute Immediate Irrigation. Moisture below critical 250 threshold during flowering yield window.": "Demo estimate: about 32 m3. Check soil near roots before any decision.",
+        "Execute Immediate Irrigation. Moisture below critical 250 threshold during flowering yield window.": "Demo estimate: about 546 m3. Check soil near roots before any decision.",
         "Verified by Validator Engine": "Human Review Required",
         "Action Recommendation": "Suggested Next Check",
         "High Confidence": "Low Confidence",

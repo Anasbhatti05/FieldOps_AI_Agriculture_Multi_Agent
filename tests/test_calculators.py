@@ -24,6 +24,15 @@ class IrrigationEstimateTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             estimate_irrigation(soil_moisture_pct=20, area_hectares=0, forecast_rain_mm=0)
 
+    def test_five_acre_wheat_demo_matches_displayed_estimate(self):
+        estimate = estimate_irrigation(
+            soil_moisture_pct=17,
+            area_hectares=5 * 0.404686,
+            forecast_rain_mm=0,
+        )
+
+        self.assertEqual(estimate.net_water_m3, 546.3)
+
 
 if __name__ == "__main__":
     unittest.main()

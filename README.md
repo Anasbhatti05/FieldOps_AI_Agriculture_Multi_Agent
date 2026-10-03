@@ -51,6 +51,13 @@ Stop the app with `Ctrl+C` in the terminal.
 
 The updated 19-slide deck is generated locally at `docs/FIELDOPS_AI_Pitch_Deck_Final.pptx`. It retains images supplied in the original presentation; it is intentionally excluded from this public repository until redistribution rights for those images are confirmed. To rebuild from the original deck, install the project requirements and run `python scripts/build_pitch_and_prd.py --source-pptx "PATH_TO_ORIGINAL_DECK.pptx"`.
 
+## Demo Video
+
+- [32-second captioned app walkthrough](docs/FIELDOPS_AI_Demo_Walkthrough.mp4): real Urdu UI, dry-wheat calculation, Excel upload, rain-offset check, report, and safety boundary.
+- [Roman-Urdu voiceover script](docs/FIELDOPS_AI_VIDEO_SCRIPT_RomanUrdu.md): narration text if you want to record your own voice. The MP4 is intentionally silent because no Urdu speech voice is installed in the build environment.
+
+To regenerate the MP4 on Windows, start the app with `start.ps1`, install optional video tools with `python -m pip install -r requirements-video.txt`, then run `python scripts/create_demo_video.py`. The capture script uses local Microsoft Edge and the checked-in Excel sample workbook.
+
 ## Test with Excel and Pictures
 
 1. In the app, download **Excel field sheet**. It includes a yellow blank row, four ready-made cases, and a **Sample Photos** sheet with wheat, cotton, and rice pictures.
@@ -96,7 +103,7 @@ The app currently has **no login, rate limiting, or persistent database**. Do no
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-The tests cover irrigation arithmetic, rain offsets, structured specialist outputs, report exports, Excel template parsing, Urdu crop/stage values and numerals, safety flags, PRD content, and pitch-deck rewriting on a synthetic fixture.
+The 15 tests cover irrigation arithmetic (including the 546.3 m³ five-acre example), rain offsets, structured specialist outputs, report exports, Excel template parsing, Urdu crop/stage values and numerals, safety flags, PRD content, and pitch-deck rewriting on a synthetic fixture.
 
 ## What Is Included
 
@@ -108,6 +115,8 @@ The tests cover irrigation arithmetic, rain offsets, structured specialist outpu
 - `data/sample_sensor_data/`: repeatable hackathon demo scenario.
 - `data/fieldops_test_workbook.xlsx`: fill-in Excel form and four test rows.
 - `data/sample_images/`: synthetic images for checking the upload control only.
+- `docs/FIELDOPS_AI_Demo_Walkthrough.mp4`: captioned video of the actual app flow.
+- `scripts/create_demo_video.py`: reproducible Edge capture and MP4 renderer; video-only packages are in `requirements-video.txt`.
 - `tools/spreadsheet.py`: Urdu/English Excel generation, parsing, and validation.
 - `tests/`: focused unit and workflow checks.
 - `setup.ps1`, `start.ps1`: Windows setup and launch helpers.
