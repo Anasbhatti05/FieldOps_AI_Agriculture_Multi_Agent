@@ -67,10 +67,18 @@ Set `GROQ_VISION_MODEL` in `.env` if your Groq account uses a different vision m
 
 The app includes a Dockerfile, a Render Blueprint, and a GitHub Actions test workflow. Public vision is disabled in the deployment configuration by default.
 
-1. Create an empty GitHub repository. From this project folder, initialize Git if needed, commit the project, then push the `main` branch. `.gitignore` excludes `.env`, `.venv`, and local secrets. Review the files before the first push.
-2. In Render, choose **New +** > **Blueprint**, connect that GitHub repository, and deploy the included `render.yaml`. Render builds the Docker image and uses its Streamlit health endpoint.
-3. Wait for the deployment to become healthy, then open the Render URL. The free service may sleep between visits. No Groq key is needed for the public demo.
-4. GitHub Actions runs tests automatically on pushes and pull requests for Python 3.11 and 3.13.
+1. Create an **empty** GitHub repository (do not add another README or license). This project already has a local `main` branch and initial commit. `.gitignore` excludes `.env`, `.venv`, and local secrets; review the staged files before sharing.
+2. Add your new repository as the remote and push the project:
+
+   ```powershell
+   git remote add origin https://github.com/YOUR_USERNAME/fieldops-ai-agriculture.git
+   git push -u origin main
+   ```
+
+   Replace `YOUR_USERNAME` with your GitHub username and use the repository name you created.
+3. In Render, choose **New +** > **Blueprint**, connect that GitHub repository, and deploy the included `render.yaml`. Render builds the Docker image and uses its Streamlit health endpoint.
+4. Wait for the deployment to become healthy, then open the Render URL. The free service may sleep between visits. No Groq key is needed for the public demo.
+5. GitHub Actions runs tests automatically on pushes and pull requests for Python 3.11 and 3.13.
 
 The app currently has **no login, rate limiting, or persistent database**. Do not put private farmer data or Groq secrets in this public deployment. Read [SECURITY.md](SECURITY.md) before sharing it. A production launch needs authentication, abuse controls, privacy/consent handling, and agronomist validation.
 
