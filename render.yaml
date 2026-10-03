@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: fieldops-ai
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: GROQ_VISION_ENABLED
+        value: "false"

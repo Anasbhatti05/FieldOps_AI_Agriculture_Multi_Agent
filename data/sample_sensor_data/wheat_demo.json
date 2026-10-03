@@ -1,0 +1,20 @@
+{
+  "scenario": "Dry wheat field, no significant rain expected",
+  "crop": "Wheat",
+  "crop_stage": "Flowering",
+  "field_area_acres": 5.0,
+  "soil_moisture_pct": 17.0,
+  "recent_rain_mm": 1.0,
+  "forecast_rain_mm": 0.0,
+  "temperature_c": 34.0,
+  "wind_kph": 8.0,
+  "location": "Multan",
+  "notes": "Some leaves look pale; check irrigation first.",
+  "expected_demo_behavior": [
+    "Six structured agent findings are returned.",
+    "The soil agent flags the entered value against the uncalibrated demo band.",
+    "The irrigation agent reports an estimate and explicitly lists assumptions.",
+    "The crop photo and pest findings ask for human review; they do not confirm a diagnosis.",
+    "The validator flags manual weather and low-confidence findings."
+  ]
+}

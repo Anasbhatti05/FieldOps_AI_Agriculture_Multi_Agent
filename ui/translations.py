@@ -1,0 +1,261 @@
+TEXT = {
+    "ur": {
+        "title": "کھیت کی بہتر دیکھ بھال، آسان فیصلے",
+        "subtitle": "فصل، مٹی، بارش اور تصویر کی معلومات ایک جگہ دیکھیں۔ فیصلہ ہمیشہ کسان یا زرعی ماہر کرے۔",
+        "language": "زبان / Language",
+        "urdu": "اردو",
+        "english": "English",
+        "demo": "گندم کا نمونہ کھولیں",
+        "excel_title": "ایکسل فائل سے جانچ",
+        "excel_download": "ایکسل فارم ڈاؤن لوڈ کریں",
+        "excel_upload": "بھری ہوئی ایکسل فائل اپ لوڈ کریں",
+        "excel_row": "اپنا کھیت یا نمونہ منتخب کریں",
+        "excel_analyze": "منتخب قطار کی جانچ کریں",
+        "excel_help": "پہلے ایکسل فارم ڈاؤن لوڈ کریں، پیلی 'میرا کھیت' والی قطار بھریں، محفوظ کریں اور یہاں اپ لوڈ کریں۔",
+        "excel_error": "ایکسل فائل نہیں کھل سکی",
+        "excel_missing": "کچھ ضروری خانے خالی یا غلط ہیں",
+        "excel_done": "ایکسل کے نمونے کی جانچ مکمل ہو گئی۔",
+        "sample_pictures": "تصویر اپ لوڈ ٹیسٹ کے نمونے",
+        "synthetic_note": "یہ کمپیوٹر سے بنائی گئی مشقی تصاویر ہیں، اصلی فصل کی تصاویر نہیں۔ تصویر اپ لوڈ دیکھنے کے لیے ہیں، بیماری کی درستگی جانچنے کے لیے نہیں۔",
+        "sample_wheat": "گندم کی مشقی تصویر",
+        "sample_cotton": "کپاس کی مشقی تصویر",
+        "sample_rice": "چاول کی مشقی تصویر",
+        "form_title": "اپنے کھیت کی معلومات",
+        "crop": "فصل",
+        "stage": "فصل کی حالت",
+        "area": "کھیت کا رقبہ (ایکڑ)",
+        "moisture": "مٹی کی نمی (فیصد)",
+        "recent_rain": "گزشتہ بارش (ملی میٹر)",
+        "forecast_rain": "اگلے دن کی متوقع بارش (ملی میٹر)",
+        "temperature": "درجہ حرارت (سینٹی گریڈ)",
+        "wind": "ہوا کی رفتار (کلومیٹر فی گھنٹہ)",
+        "location": "علاقہ یا ضلع (اختیاری)",
+        "notes": "فصل میں کیا تبدیلی دیکھی؟ (اختیاری)",
+        "photo": "فصل کی تصویر (اختیاری)",
+        "photo_hint": "پتے کی صاف تصویر لیں۔ چہرے یا ذاتی معلومات شامل نہ کریں۔",
+        "voice_hint": "موبائل پر اردو میں بولنے کے لیے کی بورڈ کا مائیک استعمال کریں۔",
+        "analyze": "کھیت کی جانچ کریں",
+        "results": "کھیت کی جانچ کا نتیجہ",
+        "waiting": "اپنی معلومات بھریں، یا پہلے نمونہ کھول کر دیکھیں۔",
+        "agents": "کس نے کیا دیکھا؟",
+        "evidence": "ثبوت اور معلومات",
+        "actions": "اب کیا کریں؟",
+        "assumptions": "حساب کی بنیاد",
+        "safety": "ضروری احتیاط",
+        "download_md": "اردو رپورٹ ڈاؤن لوڈ کریں",
+        "download_json": "مکمل ڈیٹا ڈاؤن لوڈ کریں",
+        "priority": "توجہ کی سطح",
+        "routine": "معمول کے مطابق",
+        "soon": "جلد دوبارہ دیکھیں",
+        "urgent": "فوری طور پر ماہر سے رابطہ",
+        "knowledge": "زرعی رہنمائی",
+        "local_note": "یہ نمونہ نظام ہے۔ موسم کی تازہ خبر منسلک نہیں۔ تصویر سے بیماری کی پکی تشخیص نہیں ہوتی۔",
+        "groq_note": "AI تصویر جانچ فعال ہے؛ تصویر Groq کو بھیجی جائے گی اور API استعمال ہو سکتی ہے۔",
+        "no_groq_note": "تصویر کسی AI سروس کو نہیں بھیجی جائے گی۔ AI جانچ صرف نجی ڈیمو میں الگ سے فعال کریں۔",
+        "crop_wheat": "گندم",
+        "crop_cotton": "کپاس",
+        "crop_rice": "چاول",
+        "crop_maize": "مکئی",
+        "stage_seedling": "ابتدائی پودا",
+        "stage_vegetative": "بڑھوتری",
+        "stage_flowering": "پھول یا بالی",
+        "stage_maturity": "فصل پکنے کے قریب",
+        "soil_agent": "مٹی کی جانچ",
+        "weather_agent": "موسم کی معلومات",
+        "irrigation_agent": "پانی کا اندازہ",
+        "crop_agent": "فصل کی تصویر",
+        "pest_agent": "کیڑے کی ابتدائی جانچ",
+        "knowledge_agent": "زرعی رہنمائی",
+        "confidence": "یقین کی سطح",
+        "low": "کم، دوبارہ تصدیق کریں",
+        "medium": "درمیانی",
+        "high": "زیادہ",
+        "summary_dry_rain": "مٹی کی نمی کم درج ہوئی ہے، مگر متوقع بارش حساب بدل سکتی ہے۔ بارش کے بعد مٹی دوبارہ دیکھیں۔",
+        "summary_dry": "حساب میں مٹی کی نمی کم دکھائی دیتی ہے۔ پانی دینے سے پہلے کھیت میں نمی چیک کریں۔",
+        "summary_ok": "اس اندازے میں ابھی پانی کی فوری ضرورت نہیں دکھائی دیتی۔ مقامی موسم اور مٹی دیکھتے رہیں۔",
+        "soil_low": "درج کی گئی مٹی کی نمی کم ہے۔ دو جگہ جڑوں کے پاس دوبارہ جانچیں۔",
+        "soil_watch": "مٹی کی نمی درمیانی حد میں ہے۔ کچھ وقت بعد دوبارہ جانچیں۔",
+        "soil_ok": "اس نمونے میں نمی کم نہیں دکھائی دیتی۔ کھیت پر نظر رکھیں۔",
+        "weather_note": "یہ موسم کی معلومات آپ نے درج کی ہیں؛ یہ تازہ پیش گوئی نہیں ہے۔",
+        "crop_note": "تصویر کی جانچ ابتدائی ہے، بیماری کی حتمی تشخیص نہیں۔ زرعی ماہر کو دکھائیں۔",
+        "pest_note": "تصویر سے کیڑے کی پکی شناخت نہیں ہوئی۔ تصدیق سے پہلے دوا نہ ڈالیں۔",
+        "irrigation_yes": "حساب میں پانی کی کمی کا امکان ہے۔ مٹی چیک کرکے مقامی ماہر سے مشورہ کریں۔",
+        "irrigation_no": "حساب ابھی پانی دینے کا نہیں کہتا۔ بارش کے بعد مٹی دوبارہ دیکھیں۔",
+        "knowledge_note": "یہ مختصر رہنمائی ہے، مقامی فصل کے لیے منظور شدہ نسخہ نہیں۔",
+        "action_soil": "مٹی کو پودے کی جڑ کے قریب دو جگہ سے چیک کریں۔",
+        "action_rain": "مقامی بارش کی خبر دیکھیں اور بارش کے بعد مٹی دوبارہ چیک کریں۔",
+        "action_irrigate": "مٹی خشک ہو تو پانی دینے سے پہلے مقامی زرعی ماہر سے بات کریں۔",
+        "action_wait": "مٹی اور بارش دوبارہ دیکھے بغیر پانی نہ دیں۔",
+        "action_crop": "متاثرہ پودے کو صحت مند پودے کے ساتھ دیکھیں اور ماہر کو دکھائیں۔",
+        "action_heat": "گرمی میں فصل کو صبح سویرے یا شام کے وقت دیکھیں۔",
+        "action_wind": "تیز ہوا میں اسپرے نہ کریں؛ دوا کے لیبل اور مقامی ہدایات پر عمل کریں۔",
+        "safety_note": "یہ صرف مددگار اندازہ ہے، خودکار کنٹرول یا علاج نہیں۔ دوا کا فیصلہ تصویر پر نہ کریں۔",
+        "estimated_water": "حسابی پانی کا اندازہ",
+        "water_unit": "کیوبک میٹر (m³)، صرف نمونہ",
+        "no_report": "رپورٹ بنانے کے لیے پہلے کھیت کی جانچ کریں۔",
+    },
+    "en": {
+        "title": "Clearer field checks, simpler decisions",
+        "subtitle": "Bring crop, soil, rain and photo notes together. The farmer or adviser always makes the decision.",
+        "language": "Language / زبان",
+        "urdu": "Urdu",
+        "english": "English",
+        "demo": "Load wheat demo",
+        "excel_title": "Run a check from Excel",
+        "excel_download": "Download Excel field sheet",
+        "excel_upload": "Upload your filled Excel sheet",
+        "excel_row": "Choose your field or a sample case",
+        "excel_analyze": "Check selected Excel row",
+        "excel_help": "Download the sheet, fill the yellow 'My field' row, save it, then upload it here.",
+        "excel_error": "Could not read the Excel file",
+        "excel_missing": "Some required fields are missing or invalid",
+        "excel_done": "Excel scenario check completed.",
+        "sample_pictures": "Sample pictures for upload testing",
+        "synthetic_note": "These are computer-generated practice images, not real crop photos. Use them to test image upload only, not diagnostic accuracy.",
+        "sample_wheat": "Synthetic wheat image",
+        "sample_cotton": "Synthetic cotton image",
+        "sample_rice": "Synthetic rice image",
+        "form_title": "Field information",
+        "crop": "Crop",
+        "stage": "Growth stage",
+        "area": "Field area (acres)",
+        "moisture": "Soil moisture (%)",
+        "recent_rain": "Recent rain (mm)",
+        "forecast_rain": "Expected rain next day (mm)",
+        "temperature": "Temperature (C)",
+        "wind": "Wind speed (km/h)",
+        "location": "Area or district (optional)",
+        "notes": "What changed in the crop? (optional)",
+        "photo": "Crop photo (optional)",
+        "photo_hint": "Take a clear leaf photo. Avoid faces or personal information.",
+        "voice_hint": "On a phone, use your keyboard microphone to dictate in Urdu.",
+        "analyze": "Check this field",
+        "results": "Field check result",
+        "waiting": "Enter field details or load the demo scenario first.",
+        "agents": "What each specialist found",
+        "evidence": "Evidence and inputs",
+        "actions": "What to do next",
+        "assumptions": "Calculation assumptions",
+        "safety": "Important safety note",
+        "download_md": "Download farmer report",
+        "download_json": "Download full data",
+        "priority": "Attention",
+        "routine": "Routine",
+        "soon": "Check again soon",
+        "urgent": "Contact an adviser now",
+        "knowledge": "Field guidance",
+        "local_note": "Demo system: no live weather feed. A photo cannot confirm a disease.",
+        "groq_note": "AI photo screening is enabled. Photos are sent to Groq and may incur API usage.",
+        "no_groq_note": "Photos are not sent to an AI service. Only enable vision separately for a private demo.",
+        "crop_wheat": "Wheat",
+        "crop_cotton": "Cotton",
+        "crop_rice": "Rice",
+        "crop_maize": "Maize",
+        "stage_seedling": "Seedling",
+        "stage_vegetative": "Vegetative",
+        "stage_flowering": "Flowering / heading",
+        "stage_maturity": "Near maturity",
+        "soil_agent": "Soil check",
+        "weather_agent": "Weather input",
+        "irrigation_agent": "Water estimate",
+        "crop_agent": "Crop photo",
+        "pest_agent": "Pest screening",
+        "knowledge_agent": "Field guidance",
+        "confidence": "Confidence",
+        "low": "Low, verify",
+        "medium": "Medium",
+        "high": "High",
+        "summary_dry_rain": "Soil moisture is entered as low, but expected rain changes the demo estimate. Recheck soil after rain.",
+        "summary_dry": "The estimate shows a possible soil moisture gap. Check the field before deciding on irrigation.",
+        "summary_ok": "The demo estimate does not show an immediate irrigation need. Keep checking soil and local weather.",
+        "soil_low": "Entered soil moisture is low. Recheck near the roots in two places.",
+        "soil_watch": "Soil moisture is in the demo watch band. Check again soon.",
+        "soil_ok": "This demo does not flag low moisture. Keep monitoring the field.",
+        "weather_note": "These weather values were entered by you; they are not a live forecast.",
+        "crop_note": "Image screening is preliminary, not a diagnosis. Show the crop to an adviser.",
+        "pest_note": "Pest identity is not confirmed from the photo. Do not spray before verification.",
+        "irrigation_yes": "The estimate shows a possible water gap. Verify soil and ask a local adviser.",
+        "irrigation_no": "The demo estimate does not flag irrigation now. Recheck soil after rain.",
+        "knowledge_note": "This is general demo guidance, not a locally approved prescription.",
+        "action_soil": "Check soil near the roots in two places.",
+        "action_rain": "Check a trusted local forecast and recheck soil after rain.",
+        "action_irrigate": "If the soil is still dry, discuss irrigation with a local adviser.",
+        "action_wait": "Do not irrigate based on this estimate alone; recheck soil and rain.",
+        "action_crop": "Compare affected plants with healthy ones and ask an adviser.",
+        "action_heat": "Inspect the crop in the cooler morning or evening hours.",
+        "action_wind": "Avoid spraying in strong wind; follow local rules and the product label.",
+        "safety_note": "Decision support only. No equipment control or treatment prescription. Do not treat from a photo.",
+        "estimated_water": "Estimated water amount",
+        "water_unit": "cubic metres (m³), demo only",
+        "no_report": "Run a field check before downloading a report.",
+    },
+}
+
+AGENTS = {
+    "Soil agent": "soil_agent",
+    "Weather agent": "weather_agent",
+    "Irrigation agent": "irrigation_agent",
+    "Crop health / vision agent": "crop_agent",
+    "Pest screening agent": "pest_agent",
+    "Knowledge / RAG agent": "knowledge_agent",
+}
+
+
+def text(language: str, key: str) -> str:
+    return TEXT[language][key]
+
+
+def crop_label(language: str, crop: str) -> str:
+    key = {"Wheat": "crop_wheat", "Cotton": "crop_cotton", "Rice": "crop_rice", "Maize": "crop_maize"}[crop]
+    return text(language, key)
+
+
+def stage_label(language: str, stage: str) -> str:
+    key = {
+        "Seedling": "stage_seedling",
+        "Vegetative": "stage_vegetative",
+        "Flowering": "stage_flowering",
+        "Maturity": "stage_maturity",
+    }[stage]
+    return text(language, key)
+
+
+def localized_finding(language: str, agent: str, moisture_pct: float, has_rain: bool, water_m3: float) -> str:
+    if language == "en":
+        return {
+            "Soil agent": text(language, "soil_low" if moisture_pct < 20 else "soil_watch" if moisture_pct < 26 else "soil_ok"),
+            "Weather agent": text(language, "weather_note"),
+            "Irrigation agent": text(language, "irrigation_yes" if water_m3 > 0 else "irrigation_no"),
+            "Crop health / vision agent": text(language, "crop_note"),
+            "Pest screening agent": text(language, "pest_note"),
+            "Knowledge / RAG agent": text(language, "knowledge_note"),
+        }[agent]
+    return {
+        "Soil agent": text(language, "soil_low" if moisture_pct < 20 else "soil_watch" if moisture_pct < 26 else "soil_ok"),
+        "Weather agent": text(language, "weather_note"),
+        "Irrigation agent": text(language, "irrigation_yes" if water_m3 > 0 else "irrigation_no"),
+        "Crop health / vision agent": text(language, "crop_note"),
+        "Pest screening agent": text(language, "pest_note"),
+        "Knowledge / RAG agent": text(language, "knowledge_note"),
+    }[agent]
+
+
+def localized_summary(language: str, moisture_pct: float, forecast_rain_mm: float, water_m3: float) -> str:
+    if moisture_pct < 20 and forecast_rain_mm >= 10 and water_m3 == 0:
+        return text(language, "summary_dry_rain")
+    if water_m3 > 0:
+        return text(language, "summary_dry")
+    return text(language, "summary_ok")
+
+
+def localized_actions(language: str, forecast_rain_mm: float, temperature_c: float, wind_kph: float, water_m3: float) -> list[str]:
+    actions = [text(language, "action_soil")]
+    if forecast_rain_mm >= 10:
+        actions.append(text(language, "action_rain"))
+    actions.append(text(language, "action_irrigate") if water_m3 > 0 else text(language, "action_wait"))
+    actions.append(text(language, "action_crop"))
+    if temperature_c >= 38:
+        actions.append(text(language, "action_heat"))
+    if wind_kph >= 25:
+        actions.append(text(language, "action_wind"))
+    return actions

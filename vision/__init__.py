@@ -1,0 +1,1 @@
+"""Optional image-analysis adapters."""
