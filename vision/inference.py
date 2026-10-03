@@ -3,11 +3,23 @@ import json
 import os
 from pathlib import Path
 
+import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 from groq import Groq
 
 
+def _setting(name: str, default: str = "") -> str:
+    value = os.getenv(name, "")
+    if value.strip():
+        return value
+    try:
+        return str(st.secrets.get(name, default))
+    except StreamlitSecretNotFoundError:
+        return default
+
+
 def vision_enabled() -> bool:
-    return bool(os.getenv("GROQ_API_KEY")) and os.getenv("GROQ_VISION_ENABLED", "false").strip().lower() in {
+    return bool(_setting("GROQ_API_KEY")) and _setting("GROQ_VISION_ENABLED", "false").strip().lower() in {
         "1",
         "true",
         "yes",
@@ -23,7 +35,7 @@ def inspect_crop_image(image_bytes: bytes | None) -> dict[str, str]:
             "confidence": "low",
         }
 
-    api_key = os.getenv("GROQ_API_KEY")
+    api_key = _setting("GROQ_API_KEY")
     if not api_key or not vision_enabled():
         return {
             "status": "needs_review",
@@ -31,7 +43,7 @@ def inspect_crop_image(image_bytes: bytes | None) -> dict[str, str]:
             "confidence": "low",
         }
 
-    model = os.getenv("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
+    model = _setting("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
     image_data = base64.b64encode(image_bytes).decode("ascii")
     prompt = (Path(__file__).parents[1] / "prompts" / "vision_screening.txt").read_text(encoding="utf-8")
     response = Groq(api_key=api_key).chat.completions.create(

@@ -55,33 +55,34 @@ Stop the app with `Ctrl+C` in the terminal.
 
 The supplied pictures are computer-generated illustrations because the environment had no access to an open image source. They test image upload only; they are not real crop photos and must not be used to assess vision accuracy. Use your own clear crop photo for a meaningful optional Groq image-screening demo.
 
-For a photo demo, use a crop photo you have permission to share. Without a Groq key the app accepts the photo but does not pretend to diagnose it. With a key, the photo is sent to Groq for preliminary screening; a human must still verify it.
+For a photo demo, use a crop photo you have permission to share. With vision disabled, the app accepts the photo but does not send it to an AI service. If vision is explicitly enabled, the photo is sent to Groq for preliminary screening; a human must still verify it.
 
 ## Optional Groq Vision
 
-AI image screening is off by default. For a **private demo only**, create a local `.env` from `.env.example`, add a Groq API key, then set `GROQ_VISION_ENABLED=true`. Keep `.env` private; it is ignored by Git. When enabled, uploaded crop photos are sent to Groq and may incur API charges. Do not enable this on an unauthenticated public deployment: visitors could consume your key. All other agents, retrieval, reports, and tests run without Groq.
+AI image screening is off by default. For a **private demo only**, set `GROQ_VISION_ENABLED=true` and a fresh `GROQ_API_KEY` in local `.env` or your hosting provider's secret settings. Never commit keys. When enabled, uploaded crop photos are sent to Groq and may incur API charges. Do not enable this on an unauthenticated public deployment: visitors could consume your key. All other agents, retrieval, reports, and tests run without Groq.
 
-Set `GROQ_VISION_MODEL` in `.env` if your Groq account uses a different vision model. Model availability depends on the account and provider and is not verified at setup time.
+`OPENAI_API_KEY` is not used by this MVP; do not add it. Set `GROQ_VISION_MODEL` only if your Groq account uses a different vision model. Model availability depends on the account and provider and is not verified at setup time.
 
-## Publish Online
+## Publish on Streamlit Community Cloud
 
-The app includes a Dockerfile, a Render Blueprint, and a GitHub Actions test workflow. Public vision is disabled in the deployment configuration by default.
+This repository is configured for Streamlit Community Cloud, which runs the Streamlit app directly. It also includes a Dockerfile and Render Blueprint as an alternative.
 
-1. Create an **empty** GitHub repository (do not add another README or license). This project already has a local `main` branch and initial commit. `.gitignore` excludes `.env`, `.venv`, and local secrets; review the staged files before sharing.
-2. Add your new repository as the remote and push the project:
+1. Revoke any API keys previously pasted into chats, logs, or public places. Create replacements only if needed; do not send them in chat.
+2. Open [share.streamlit.io](https://share.streamlit.io), sign in with GitHub, and select **Create app** > **Yup, I have an app**.
+3. Select repository `Anasbhatti05/FieldOps_AI_Agriculture_Multi_Agent`, branch `main`, and main file path `app.py`.
+4. In **Advanced settings**, leave secrets empty for the public demo, then select **Deploy**. The app works without any API key. Keep `GROQ_VISION_ENABLED` off for a public unauthenticated app.
+5. If you later need Groq vision for a private, controlled demo, open the deployed app's **Settings** > **Secrets** and add a newly rotated key there:
 
-   ```powershell
-   git remote add origin https://github.com/YOUR_USERNAME/fieldops-ai-agriculture.git
-   git push -u origin main
+   ```toml
+   GROQ_VISION_ENABLED = "true"
+   GROQ_API_KEY = "paste-a-new-key-here"
    ```
 
-   Replace `YOUR_USERNAME` with your GitHub username and use the repository name you created.
+   Streamlit Cloud secrets are read directly by the app. Never commit this block, put it in a public file, or paste the key in chat. For a public demo, leave the setting off because there is no login or rate limit.
 
-3. In Render, choose **New +** > **Blueprint**, connect that GitHub repository, and deploy the included `render.yaml`. Render builds the Docker image and uses its Streamlit health endpoint.
-4. Wait for the deployment to become healthy, then open the Render URL. The free service may sleep between visits. No Groq key is needed for the public demo.
-5. GitHub Actions runs tests automatically on pushes and pull requests for Python 3.11 and 3.13.
+GitHub Actions runs tests automatically on pushes and pull requests for Python 3.11 and 3.13. Push code updates with `git add`, `git commit`, and `git push`; Streamlit Community Cloud redeploys from `main`.
 
-The app currently has **no login, rate limiting, or persistent database**. Do not put private farmer data or Groq secrets in this public deployment. Read [SECURITY.md](SECURITY.md) before sharing it. A production launch needs authentication, abuse controls, privacy/consent handling, and agronomist validation.
+The app currently has **no login, rate limiting, or persistent database**. Do not upload private farmer data or enable paid AI calls publicly. Read [SECURITY.md](SECURITY.md) before sharing it. A production launch needs authentication, abuse controls, privacy/consent handling, and agronomist validation.
 
 ## Run Tests
 
@@ -104,7 +105,7 @@ The tests cover irrigation arithmetic, rain offsets, structured specialist outpu
 - `tools/spreadsheet.py`: Urdu/English Excel generation, parsing, and validation.
 - `tests/`: focused unit and workflow checks.
 - `setup.ps1`, `start.ps1`: Windows setup and launch helpers.
-- `Dockerfile`, `render.yaml`: container and Render deployment configuration.
+- `Dockerfile`, `render.yaml`: optional container and Render deployment configuration.
 - `.github/workflows/tests.yml`: automated checks on GitHub.
 - `SECURITY.md`: public-demo privacy and API-key guidance.
 

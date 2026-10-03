@@ -1,6 +1,7 @@
 import os
 import json
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from agents.coordinator import coordinate
@@ -28,6 +29,41 @@ def sample_field(**changes):
 
 
 class AgentWorkflowTests(unittest.TestCase):
+    def test_streamlit_cloud_secrets_can_enable_private_vision(self):
+        response = SimpleNamespace(
+            choices=[
+                SimpleNamespace(
+                    message=SimpleNamespace(
+                        content=json.dumps(
+                            {
+                                "visible_signs": "Leaves appear pale",
+                                "possible_causes": "Several possibilities",
+                                "next_check": "Compare several plants",
+                            }
+                        )
+                    )
+                )
+            ]
+        )
+        completion = unittest.mock.Mock(return_value=response)
+        client = SimpleNamespace(
+            chat=SimpleNamespace(completions=SimpleNamespace(create=completion))
+        )
+        streamlit_module = SimpleNamespace(
+            secrets={"GROQ_API_KEY": "fresh-test-key", "GROQ_VISION_ENABLED": "true"}
+        )
+        with patch.dict(
+            os.environ,
+            {"GROQ_API_KEY": "", "GROQ_VISION_ENABLED": "", "GROQ_VISION_MODEL": ""},
+        ):
+            with patch("vision.inference.st", streamlit_module):
+                with patch("vision.inference.Groq", return_value=client) as groq_client:
+                    result = inspect_crop_image(b"test-image")
+
+        groq_client.assert_called_once_with(api_key="fresh-test-key")
+        completion.assert_called_once()
+        self.assertIn("Leaves appear pale", result["finding"])
+
     def test_groq_vision_is_disabled_even_when_a_key_exists(self):
         with patch.dict(os.environ, {"GROQ_API_KEY": "test-key", "GROQ_VISION_ENABLED": "false"}):
             with patch("vision.inference.Groq") as groq_client:
