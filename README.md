@@ -76,6 +76,7 @@ The app includes a Dockerfile, a Render Blueprint, and a GitHub Actions test wor
    ```
 
    Replace `YOUR_USERNAME` with your GitHub username and use the repository name you created.
+
 3. In Render, choose **New +** > **Blueprint**, connect that GitHub repository, and deploy the included `render.yaml`. Render builds the Docker image and uses its Streamlit health endpoint.
 4. Wait for the deployment to become healthy, then open the Render URL. The free service may sleep between visits. No Groq key is needed for the public demo.
 5. GitHub Actions runs tests automatically on pushes and pull requests for Python 3.11 and 3.13.
