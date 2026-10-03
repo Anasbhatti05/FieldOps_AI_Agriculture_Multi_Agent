@@ -57,7 +57,7 @@ class AgentWorkflowTests(unittest.TestCase):
         self.assertIn("forecast rain", result.summary)
 
     def test_report_exports_urdu_and_json_without_photo_bytes(self):
-        field = sample_field(image_bytes=b"private-photo-bytes")
+        field = sample_field(image_bytes=b"private-photo-bytes", notes="پتے زرد دکھائی دے رہے ہیں", location="ملتان")
         with patch.dict(os.environ, {"GROQ_API_KEY": ""}):
             result = coordinate(field)
         markdown, json_text = build_report(field, result, "ur")
@@ -65,8 +65,12 @@ class AgentWorkflowTests(unittest.TestCase):
 
         self.assertIn("کھیت کی جانچ", markdown)
         self.assertNotIn("private-photo-bytes", json_text)
-        self.assertNotIn("image_bytes", data["field"])
-        self.assertEqual(len(data["assessment"]["findings"]), 6)
+        self.assertNotIn("image_bytes", json_text)
+        self.assertNotIn("Demo target moisture", markdown + json_text)
+        self.assertNotIn("Estimated effective rainfall", markdown + json_text)
+        self.assertNotIn("Soil moisture:", markdown + json_text)
+        self.assertFalse(any(character.isascii() and character.isalpha() for character in markdown + json_text))
+        self.assertEqual(len(data["جانچ"]["ماہرین کی جانچ"]), 6)
 
 
 if __name__ == "__main__":

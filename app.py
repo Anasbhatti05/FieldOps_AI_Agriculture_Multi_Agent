@@ -11,7 +11,20 @@ from PIL import Image, ImageOps
 from agents.coordinator import coordinate
 from agents.models import FieldAssessment
 from tools.spreadsheet import create_test_workbook, read_workbook
-from ui.translations import AGENTS, crop_label, localized_actions, localized_finding, localized_summary, stage_label, text
+from ui.translations import (
+    AGENTS,
+    crop_label,
+    localized_actions,
+    localized_assumption,
+    localized_calculation_label,
+    localized_evidence,
+    localized_finding,
+    localized_location,
+    localized_summary,
+    scenario_label,
+    stage_label,
+    text,
+)
 from vision.inference import vision_enabled
 
 
@@ -86,50 +99,130 @@ def build_report(field: FieldAssessment, result, language: str) -> tuple[str, st
     water_m3 = float(irrigation.calculation.get("estimated_net_water_m3", 0))
     summary = localized_summary(language, field.soil_moisture_pct, field.forecast_rain_mm, water_m3)
     actions = localized_actions(language, field.forecast_rain_mm, field.temperature_c, field.wind_kph, water_m3)
-    report_lines = [
-        "# FieldOps AI - Field check" if language == "en" else "# FieldOps AI - کھیت کی جانچ",
-        f"Generated: {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M %Z')}",
-        "",
-        f"- Crop: {crop_label(language, field.crop)}",
-        f"- Stage: {stage_label(language, field.crop_stage)}",
-        f"- Area: {field.field_area_acres:.2f} acres",
-        f"- Soil moisture: {field.soil_moisture_pct:.1f}%",
-        f"- Entered expected rain: {field.forecast_rain_mm:.1f} mm",
-        f"- Temperature / wind: {field.temperature_c:.1f} C / {field.wind_kph:.1f} km/h",
-        f"- Location: {field.location or 'Not entered'}",
-        "",
-        f"## {'Summary' if language == 'en' else 'خلاصہ'}",
-        summary,
-        "",
-        f"## {'Next steps' if language == 'en' else 'اگلے قدم'}",
-        *[f"{index}. {action}" for index, action in enumerate(actions, start=1)],
-        "",
-        f"## {'Specialist trace' if language == 'en' else 'ماہر ایجنٹس کی جانچ'}",
-    ]
+    now = datetime.now().astimezone()
+    generated_at = now.strftime("%Y-%m-%d %H:%M")
+    if language == "en":
+        report_lines = [
+            "# FieldOps AI - Field check",
+            f"Generated: {generated_at}",
+            "",
+            f"- Crop: {crop_label(language, field.crop)}",
+            f"- Stage: {stage_label(language, field.crop_stage)}",
+            f"- Area: {field.field_area_acres:.2f} acres",
+            f"- Soil moisture: {field.soil_moisture_pct:.1f}%",
+            f"- Entered expected rain: {field.forecast_rain_mm:.1f} mm",
+            f"- Temperature / wind: {field.temperature_c:.1f} C / {field.wind_kph:.1f} km/h",
+            f"- Location: {field.location or 'Not entered'}",
+            "",
+            "## Summary",
+            summary,
+            "",
+            "## Next steps",
+            *[f"{index}. {action}" for index, action in enumerate(actions, start=1)],
+            "",
+            "## Specialist trace",
+        ]
+    else:
+        report_lines = [
+            "# کھیت کی جانچ",
+            f"{text(language, 'calculated_at')}: {generated_at}",
+            "",
+            f"- {text(language, 'report_crop')}: {crop_label(language, field.crop)}",
+            f"- {text(language, 'report_stage')}: {stage_label(language, field.crop_stage)}",
+            f"- {text(language, 'report_area')}: {field.field_area_acres:.2f} ایکڑ",
+            f"- {text(language, 'report_moisture')}: {field.soil_moisture_pct:.1f} فیصد",
+            f"- {text(language, 'report_recent_rain')}: {field.recent_rain_mm:.1f} ملی میٹر",
+            f"- {text(language, 'report_forecast_rain')}: {field.forecast_rain_mm:.1f} ملی میٹر",
+            f"- {text(language, 'report_temperature')}: {field.temperature_c:.1f} سینٹی گریڈ",
+            f"- {text(language, 'report_wind')}: {field.wind_kph:.1f} کلومیٹر فی گھنٹہ",
+            f"- {text(language, 'report_location')}: {localized_location(language, field.location) or 'درج نہیں کیا گیا'}",
+            "",
+            f"## {text(language, 'report_summary')}",
+            summary,
+            "",
+            f"## {text(language, 'report_actions')}",
+            *[f"{index}. {action}" for index, action in enumerate(actions, start=1)],
+            "",
+            f"## {text(language, 'report_agents')}",
+        ]
     for finding in result.findings:
         label = text(language, AGENTS[finding.agent])
         translated = localized_finding(language, finding.agent, field.soil_moisture_pct, field.forecast_rain_mm >= 10, water_m3)
         report_lines.extend([f"### {label}", translated])
         if finding.evidence:
-            report_lines.extend([f"- {entry}" for entry in finding.evidence])
+            report_lines.extend([
+                f"- {localized_evidence(language, finding.agent, entry)}"
+                for entry in finding.evidence
+            ])
         if finding.sources:
-            report_lines.append(f"Sources: {', '.join(finding.sources)}")
+            report_lines.append(text(language, "report_source") if language == "ur" else f"Sources: {', '.join(finding.sources)}")
+        if finding.limitations:
+            report_lines.extend([
+                f"- {localized_assumption(language, limitation)}"
+                for limitation in finding.limitations
+            ])
         report_lines.append("")
     report_lines.extend([
-        f"## {'Calculation assumptions' if language == 'en' else 'حساب کی بنیاد'}",
-        *[f"- {item}" for item in result.assumptions],
+        f"## {text(language, 'report_assumptions')}",
+        *[f"- {localized_assumption(language, item)}" for item in result.assumptions],
         "",
-        f"## {'Review flags' if language == 'en' else 'دوبارہ جانچ'}",
-        *[f"- {item}" for item in result.review_flags],
+        f"## {text(language, 'report_flags')}",
+        *[f"- {localized_assumption(language, item)}" for item in result.review_flags],
         "",
         text(language, "safety_note"),
     ])
     markdown_report = "\n".join(report_lines)
+    if language == "en":
+        field_data = field.model_dump(mode="json", exclude={"image_bytes"})
+        assessment_data = result.model_dump(mode="json")
+        generated_key = "generated_at"
+    else:
+        field_data = {
+            "فصل": crop_label(language, field.crop),
+            "فصل کی حالت": stage_label(language, field.crop_stage),
+            "کھیت کا رقبہ (ایکڑ)": field.field_area_acres,
+            "مٹی کی نمی (فیصد)": field.soil_moisture_pct,
+            "گزشتہ بارش (ملی میٹر)": field.recent_rain_mm,
+            "متوقع بارش (ملی میٹر)": field.forecast_rain_mm,
+            "درجہ حرارت (سینٹی گریڈ)": field.temperature_c,
+            "ہوا کی رفتار (کلومیٹر فی گھنٹہ)": field.wind_kph,
+            "علاقہ یا ضلع": localized_location(language, field.location) or "درج نہیں کیا گیا",
+            "فصل میں تبدیلی": field.notes or "درج نہیں کی گئی",
+        }
+        assessment_data = {
+            text(language, "report_priority"): text(language, result.priority),
+            text(language, "report_summary"): summary,
+            text(language, "report_actions"): actions,
+            text(language, "report_agents"): [
+                {
+                    "ماہر": text(language, AGENTS[finding.agent]),
+                    "نتیجہ": localized_finding(language, finding.agent, field.soil_moisture_pct, field.forecast_rain_mm >= 10, water_m3),
+                    text(language, "report_evidence"): [
+                        localized_evidence(language, finding.agent, evidence)
+                        for evidence in finding.evidence
+                    ],
+                    text(language, "report_calculation"): {
+                        localized_calculation_label(language, key): value
+                        for key, value in finding.calculation.items()
+                    },
+                    text(language, "report_confidence"): text(language, finding.confidence),
+                    text(language, "report_limitations"): [
+                        localized_assumption(language, limitation)
+                        for limitation in finding.limitations
+                    ],
+                    "ماخذ": [text(language, "report_source")] if finding.sources else [],
+                }
+                for finding in result.findings
+            ],
+            text(language, "report_assumptions"): [localized_assumption(language, item) for item in result.assumptions],
+            text(language, "report_flags"): [localized_assumption(language, item) for item in result.review_flags],
+        }
+        generated_key = "وقتِ جانچ"
     json_report = json.dumps(
         {
-            "generated_at": datetime.now().astimezone().isoformat(),
-            "field": field.model_dump(mode="json", exclude={"image_bytes"}),
-            "assessment": result.model_dump(mode="json"),
+            generated_key: now.isoformat() if language == "en" else generated_at,
+            "کھیت" if language == "ur" else "field": field_data,
+            "جانچ" if language == "ur" else "assessment": assessment_data,
         },
         ensure_ascii=False,
         indent=2,
@@ -166,23 +259,23 @@ def render_results(field: FieldAssessment, result, language: str) -> None:
                     if finding.calculation:
                         with st.expander(text(language, "assumptions")):
                             for key, value in finding.calculation.items():
-                                st.caption(f"{key.replace('_', ' ')}: {value}")
+                                st.caption(f"{localized_calculation_label(language, key)}: {value}")
                     if finding.evidence or finding.limitations:
                         with st.expander(text(language, "evidence")):
                             for evidence in finding.evidence:
-                                st.write(f"- {evidence}")
+                                st.write(f"- {localized_evidence(language, finding.agent, evidence)}")
                             if finding.sources:
-                                st.caption("Knowledge files: " + ", ".join(finding.sources))
+                                st.caption(text(language, "report_source") if language == "ur" else "Knowledge files: " + ", ".join(finding.sources))
                             for limitation in finding.limitations:
-                                st.caption(limitation)
+                                st.caption(localized_assumption(language, limitation))
 
     st.markdown(f"### {text(language, 'safety')}")
     st.markdown(f"<div class='safety-strip'>{text(language, 'safety_note')}</div>", unsafe_allow_html=True)
     with st.expander(text(language, "assumptions")):
         for assumption in result.assumptions:
-            st.write(f"- {assumption}")
+            st.write(f"- {localized_assumption(language, assumption)}")
         for flag in result.review_flags:
-            st.write(f"- {flag}")
+            st.write(f"- {localized_assumption(language, flag)}")
     report_markdown, report_json = build_report(field, result, language)
     left, right = st.columns(2)
     with left:
@@ -232,8 +325,8 @@ def main() -> None:
                 "forecast_rain": 0.0,
                 "temperature": 34.0,
                 "wind": 8.0,
-                "location": "Multan",
-                "notes": "Some leaves look pale; check irrigation first.",
+                "location": "ملتان" if language == "ur" else "Multan",
+                "notes": "کچھ پتے زرد دکھائی دے رہے ہیں؛ پہلے مٹی کی نمی دیکھیں۔",
                 "analysis": None,
             }
         )
@@ -265,8 +358,8 @@ def main() -> None:
                 text(language, "excel_row"),
                 options=range(len(scenarios)),
                 format_func=lambda index: (
-                    f"{scenarios[index].name} | row {scenarios[index].row_number}"
-                    + (f" | {text(language, 'excel_missing')}: {scenarios[index].error}" if scenarios[index].error else "")
+                    f"{scenario_label(language, scenarios[index].name)}، {text(language, 'row')} {scenarios[index].row_number}"
+                    + (f"، {text(language, 'excel_missing')}: {scenarios[index].error}" if scenarios[index].error else "")
                 ),
                 key="excel_scenario",
             )
@@ -363,7 +456,7 @@ def main() -> None:
                     result = coordinate(field)
                 st.session_state.analysis = (field, result)
         except Exception as error:
-            st.error(f"Could not complete this field check: {error}")
+            st.error(f"{text(language, 'analysis_error')}: {error}" if language == "en" else text(language, "analysis_error"))
 
     analysis = st.session_state.get("analysis")
     if analysis:
